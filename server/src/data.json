@@ -1,0 +1,19 @@
+{
+  "todolist": [
+    {
+      "title": "밥먹기",
+      "complete": false,
+      "id": 1
+    },
+    {
+      "title": "자기",
+      "complete": false,
+      "id": 2
+    },
+    {
+      "title": "씻기",
+      "complete": false,
+      "id": 3
+    }
+  ]
+}
