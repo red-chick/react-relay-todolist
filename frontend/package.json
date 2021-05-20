@@ -10,6 +10,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "object-hash": "^2.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-relay": "^11.0.2",
@@ -19,10 +20,10 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "yarn run relay && react-scripts start",
-    "build": "yarn run relay &&react-scripts build",
+    "start": "yarn run relay && react-app-rewired start",
+    "build": "yarn run relay &&react-app-rewired build",
     "relay": "yarn run relay-compiler --src ./src --schema ./schema.graphql --language typescript --artifactDirectory ./src/__generated__",
-    "test": "react-scripts test",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,10 +45,13 @@
     ]
   },
   "devDependencies": {
+    "@types/object-hash": "^2.1.0",
     "@types/react-relay": "^11.0.1",
     "@types/relay-runtime": "^11.0.0",
     "babel-plugin-relay": "^11.0.2",
+    "customize-cra": "^1.0.0",
     "graphql": "^15.5.0",
+    "react-app-rewired": "^2.1.8",
     "relay-compiler": "^11.0.2",
     "relay-compiler-language-typescript": "^14.0.0",
     "relay-config": "^11.0.2"
