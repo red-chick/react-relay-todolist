@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  loadQuery,
+  PreloadedQuery,
+  RelayEnvironmentProvider,
+  usePreloadedQuery,
+} from "react-relay";
+import environment from "./environment";
 
-function App() {
+import graphql from "babel-plugin-relay/macro";
+import { AppQuery } from "./__generated__/AppQuery.graphql";
+import { Suspense } from "react";
+
+const query = graphql`
+  query AppQuery {
+    todoList {
+      id
+      title
+      complete
+    }
+  }
+`;
+
+type Props = {
+  preloadedQuery: PreloadedQuery<AppQuery, {}>;
+};
+
+const App: React.FC<Props> = ({ preloadedQuery }) => {
+  const { todoList } = usePreloadedQuery<AppQuery>(query, preloadedQuery);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      {todoList?.map((todo) => todo && <li key={todo.id}>{todo.title}</li>)}
+    </main>
+  );
+};
+
+const preloadedQuery = loadQuery<AppQuery>(environment, query, {});
+
+function AppRoot() {
+  return (
+    <RelayEnvironmentProvider environment={environment}>
+      <Suspense fallback={"Loading..."}>
+        <App preloadedQuery={preloadedQuery} />
+      </Suspense>
+    </RelayEnvironmentProvider>
   );
 }
 
-export default App;
+export default AppRoot;

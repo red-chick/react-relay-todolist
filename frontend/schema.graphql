@@ -1,0 +1,28 @@
+schema {
+  query: RootQueryType
+  mutation: Mutation
+}
+
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
+type Mutation {
+  addTodo(title: String!): Todo
+  deleteTodo(id: ID!): Todo
+  editTodo(id: ID!, title: String, complete: Boolean): Todo
+}
+
+type RootQueryType {
+  todo(id: ID): Todo
+  todoList: [Todo]
+}
+
+type Todo {
+  id: ID!
+  title: String!
+  complete: Boolean!
+}
+

@@ -6,6 +6,7 @@ const {
   GraphQLNonNull,
   GraphQLSchema,
   GraphQLBoolean,
+  GraphQLID,
 } = require("graphql");
 
 const API_HOSTNAME = "http://localhost:4000";
@@ -13,9 +14,9 @@ const API_HOSTNAME = "http://localhost:4000";
 const TodoType = new GraphQLObjectType({
   name: "Todo",
   fields: () => ({
-    id: { type: GraphQLString },
-    title: { type: GraphQLString },
-    complete: { type: GraphQLBoolean },
+    id: { type: new GraphQLNonNull(GraphQLID) },
+    title: { type: new GraphQLNonNull(GraphQLString) },
+    complete: { type: new GraphQLNonNull(GraphQLBoolean) },
   }),
 });
 
@@ -25,7 +26,7 @@ const RootQuery = new GraphQLObjectType({
     todo: {
       type: TodoType,
       args: {
-        id: { type: GraphQLString },
+        id: { type: GraphQLID },
       },
       resolve(parentValue, args) {
         return axios
@@ -62,7 +63,7 @@ const mutation = new GraphQLObjectType({
     deleteTodo: {
       type: TodoType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLString) },
+        id: { type: new GraphQLNonNull(GraphQLID) },
       },
       resolve(parentValue, args) {
         return axios
@@ -73,7 +74,7 @@ const mutation = new GraphQLObjectType({
     editTodo: {
       type: TodoType,
       args: {
-        id: { type: new GraphQLNonNull(GraphQLString) },
+        id: { type: new GraphQLNonNull(GraphQLID) },
         title: { type: GraphQLString },
         complete: { type: GraphQLBoolean },
       },
